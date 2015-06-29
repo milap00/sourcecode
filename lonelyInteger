@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+class Solution {
+   
+   static int lonelyinteger(int[] a) 
+   {
+            int i = 0;
+            int len = a.Length;
+            if (len==1) return a[0];
+            int start = 0;
+            int count = len;
+            int p = 0;
+            int[] vec = new int[len];
+            for (i = 0; i < len; i++) vec[i] = 1;
+            i = start + 1;
+            do
+            {
+                if (i >= len)
+                {
+                    for (p = 0; p < len; p++)
+                    {
+                        if (vec[p] == 1) break;
+                    }
+                    start = p+1;
+                    i = start + 1;
+                }
+                if (a[i] == a[start])
+                {
+                    vec[start] = -1;
+                    vec[i] = -1;  // mapping all elements pair with -1
+                    count = count - 2;
+                    for (p = 0; p < len; p++)
+                    {
+                        if (vec[p] == 1) break;
+                    }
+                    start = p;
+                    i = start + 1;
+                   
+                }
+                else i++;
+            } while (count!=1);
+            for (i = 0; i < len; i++)
+            {
+                if (vec[i] == 1) break;
+            }
+            return a[i];
+    }
+   static void Main(String[] args) {
+        int res;
+        
+        int _a_size = Convert.ToInt32(Console.ReadLine());
+        int[] _a = new int [_a_size];
+        int _a_item;
+        String move = Console.ReadLine();
+        String[] move_split = move.Split(' ');
+        for(int _a_i = 0; _a_i < move_split.Length; _a_i++) {
+            _a_item = Convert.ToInt32(move_split[_a_i]);
+            _a[_a_i] = _a_item;
+        }
+        res = lonelyinteger(_a);
+        Console.WriteLine(res);
+    }
+}
